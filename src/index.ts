@@ -5,7 +5,7 @@ import { promisify } from 'node:util'
 import { exec } from 'child_process'
 
 import { context, getOctokit } from '@actions/github'
-import core from '@actions/core'
+import * as core from '@actions/core'
 
 const Exec = promisify(exec)
 

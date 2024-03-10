@@ -524,8 +524,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OidcClient = void 0;
-const http_client_1 = __nccwpck_require__(1759);
-const auth_1 = __nccwpck_require__(1366);
+const http_client_1 = __nccwpck_require__(6372);
+const auth_1 = __nccwpck_require__(8603);
 const core_1 = __nccwpck_require__(9093);
 class OidcClient {
     static createHttpClient(allowRetry = true, maxRetry = 10) {
@@ -1143,7 +1143,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getApiBaseUrl = exports.getProxyFetch = exports.getProxyAgentDispatcher = exports.getProxyAgent = exports.getAuthString = void 0;
-const httpClient = __importStar(__nccwpck_require__(1759));
+const httpClient = __importStar(__nccwpck_require__(6372));
 const undici_1 = __nccwpck_require__(2988);
 function getAuthString(token, options) {
     if (!token && !options.auth) {
@@ -1247,7 +1247,7 @@ exports.getOctokitOptions = getOctokitOptions;
 
 /***/ }),
 
-/***/ 1366:
+/***/ 8603:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -1335,7 +1335,7 @@ exports.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHand
 
 /***/ }),
 
-/***/ 1759:
+/***/ 6372:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -1377,7 +1377,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.HttpClient = exports.isHttps = exports.HttpClientResponse = exports.HttpClientError = exports.getProxyUrl = exports.MediaTypes = exports.Headers = exports.HttpCodes = void 0;
 const http = __importStar(__nccwpck_require__(3685));
 const https = __importStar(__nccwpck_require__(5687));
-const pm = __importStar(__nccwpck_require__(9379));
+const pm = __importStar(__nccwpck_require__(2067));
 const tunnel = __importStar(__nccwpck_require__(4225));
 const undici_1 = __nccwpck_require__(2988);
 var HttpCodes;
@@ -1843,7 +1843,7 @@ class HttpClient {
         if (this._keepAlive && useProxy) {
             agent = this._proxyAgent;
         }
-        if (this._keepAlive && !useProxy) {
+        if (!useProxy) {
             agent = this._agent;
         }
         // if agent is already assigned use that agent.
@@ -1875,15 +1875,11 @@ class HttpClient {
             agent = tunnelAgent(agentOptions);
             this._proxyAgent = agent;
         }
-        // if reusing agent across request and tunneling agent isn't assigned create a new agent
-        if (this._keepAlive && !agent) {
+        // if tunneling agent isn't assigned create a new agent
+        if (!agent) {
             const options = { keepAlive: this._keepAlive, maxSockets };
             agent = usingSsl ? new https.Agent(options) : new http.Agent(options);
             this._agent = agent;
-        }
-        // if not using private agent and tunnel agent isn't setup then use global agent
-        if (!agent) {
-            agent = usingSsl ? https.globalAgent : http.globalAgent;
         }
         if (usingSsl && this._ignoreSslError) {
             // we don't want to set NODE_TLS_REJECT_UNAUTHORIZED=0 since that will affect request for entire process
@@ -1998,7 +1994,7 @@ const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => ((c[k.toLowerCa
 
 /***/ }),
 
-/***/ 9379:
+/***/ 2067:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -28981,8 +28977,28 @@ function wrappy (fn, cb) {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 /**
@@ -28991,16 +29007,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const node_util_1 = __nccwpck_require__(7261);
 const child_process_1 = __nccwpck_require__(2081);
 const github_1 = __nccwpck_require__(5942);
-const core_1 = __importDefault(__nccwpck_require__(9093));
+const core = __importStar(__nccwpck_require__(9093));
 const Exec = (0, node_util_1.promisify)(child_process_1.exec);
 (async () => {
     const { stdout } = await Exec('npm i -g @ahqstore/cli');
     console.log(stdout);
     const { owner, repo } = github_1.context.repo;
     const rep = `${owner}/${repo}`;
-    const r_id = core_1.default.getInput('release');
+    const r_id = core.getInput('release');
     if (!process.env['GH_TOKEN']) {
-        core_1.default.error('GH_TOKEN environment variable is not set');
+        core.error('GH_TOKEN environment variable is not set');
     }
     const { stdout: out } = await Exec('ahqstore build', {
         env: {
@@ -29011,8 +29027,8 @@ const Exec = (0, node_util_1.promisify)(child_process_1.exec);
         }
     });
     const [k, value] = out.trim().split('=');
-    core_1.default.info(`Got "${k}" as "${value}"`);
-    const upload = core_1.default.getBooleanInput('upload');
+    core.info(`Got "${k}" as "${value}"`);
+    const upload = core.getBooleanInput('upload');
     if (upload) {
         await (0, github_1.getOctokit)(process.env['GH_TOKEN']).rest.issues.createComment({
             owner: 'ahqstore',
