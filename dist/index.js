@@ -29018,7 +29018,7 @@ const Exec = (0, node_util_1.promisify)(child_process_1.exec);
     if (!process.env['GH_TOKEN']) {
         core.error('GH_TOKEN environment variable is not set');
     }
-    const { stdout: out } = await Exec('ahqstore build', {
+    const { stdout: out } = await Exec('ahqstore upload', {
         env: {
             ...process.env,
             RELEASE_ID: r_id,
