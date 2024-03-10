@@ -1,11 +1,11 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
+name: 'AHQ Store Upload app'
+description: 'Upload your app to the AHQ Store apps repo at @ahqstore/apps'
 author: '@ahqstore'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: 'grid'
+  color: 'gray-dark'
 
 # Define your inputs here.
 inputs:
@@ -17,11 +17,6 @@ inputs:
     description: 'Shall we upload to the AHQ Store apps repo?'
     required: true
     default: 'false'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
 
 runs:
   using: node20
