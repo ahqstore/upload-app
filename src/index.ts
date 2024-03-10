@@ -10,7 +10,7 @@ import * as core from '@actions/core'
 const Exec = promisify(exec)
 
 ;(async () => {
-  const { stdout } = await Exec('npm i -g @ahqstore/cli')
+  const { stdout } = await Exec('cargo install ahqstore_cli_rs')
 
   console.log(stdout)
 

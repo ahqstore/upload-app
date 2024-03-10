@@ -29010,7 +29010,7 @@ const github_1 = __nccwpck_require__(5942);
 const core = __importStar(__nccwpck_require__(9093));
 const Exec = (0, node_util_1.promisify)(child_process_1.exec);
 (async () => {
-    const { stdout } = await Exec('npm i -g @ahqstore/cli');
+    const { stdout } = await Exec('cargo install ahqstore_cli_rs');
     console.log(stdout);
     const { owner, repo } = github_1.context.repo;
     const rep = `${owner}/${repo}`;

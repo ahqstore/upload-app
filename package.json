@@ -1,7 +1,7 @@
 {
   "name": "upload-app",
   "description": "AHQ Store upload app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "@ahqstore, @ahqsoftwares",
   "private": true,
   "homepage": "https://github.com/ahqstore/upload-app",
