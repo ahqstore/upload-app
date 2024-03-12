@@ -6,7 +6,7 @@ Upload apps to the @ahqstore/apps repo
 
 ```yaml
 - name: Build
-  uses: ahqstore/upload-app@v0.0.3
+  uses: ahqstore/upload-app@v0.1.0
   with:
     release: 'release id' # GH Release Id to search through
     upload: true # Set to False if you don't want to upload to ahqstore/apps repo
